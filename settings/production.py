@@ -131,6 +131,7 @@ STATICFILES_DIRS = [
     '/var/www/static/',
 ]
 
+STATIC_ROOT = '/home/vblog/static/'
 
 # Logging configs
 
