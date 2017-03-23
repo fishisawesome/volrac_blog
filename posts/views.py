@@ -1,6 +1,9 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.utils import timezone
+from django.urls import reverse
 
+from django.contrib.auth.models import User
 from .models import Post
 
 def index(request):
@@ -8,6 +11,17 @@ def index(request):
     context = {}
     context['latest_posts'] = latest_posts
     return render(request, 'posts/index.html', context)
+
+def new(request):
+    args = {}
+    args['user'] = User.objects.get(pk=request.POST['user_id'])
+    args['title'] = request.POST['title']
+    args['content'] = request.POST['content']
+    args['pub_date'] = timezone.now()
+    post = Post(**args)
+    post.save()
+
+    return HttpResponseRedirect(reverse('posts:index'))
 
 def detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)

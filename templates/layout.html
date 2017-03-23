@@ -24,7 +24,13 @@
         {% block custom_css %}{% endblock %}
     </head>
     <body>
-        
+        {% block header %}
+        <header>
+            <div class="container">
+                <h1 class="text-center"><a href="{% url 'posts:index' %}">Volrac</a></h1>
+            </div>
+        </header>
+        {% endblock %}
         {% block content %}{% endblock %}
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% load blog_extras %}
 
 {% block pagetitle %}
 Volrac's latest posts.
@@ -7,6 +8,31 @@ Volrac's latest posts.
 {% block content %}
 <div class="container">
     <h1 class="text-center">Latest Posts</h1>
+    {% if user.is_authenticated and user|has_group:"publisher" %} 
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    New Post
+                </div>
+                <div class="panel-body">
+                    <form method="POST" action="{% url 'posts:new' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ user.id }}" />
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="title" placeholder="Title" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="content" class="form-control" placeholder="Content" rows="5" required></textarea>
+                        </div>
+                        
+                        <button class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
             {% for post in latest_posts %}
@@ -23,7 +49,7 @@ Volrac's latest posts.
                     <div class="panel-footer text-left">
                         <!--<i class="fa fa-calendar"></i> {{ post.pub_date | date:"M j, Y P" }} /-->
                         <i class="fa fa-calendar"></i> {{ post.pub_date | timesince }} ago /
-                        <i class="fa fa-comments-o"></i>  {{ post.comment_set.all|length }} comments
+                        <i class="fa fa-comments-o"></i>  <a href="{%url 'posts:detail' post.id %}#comments">{{ post.comment_set.all|length }} comments</a>
                     </div>
                 </div>
             {% endfor %}
