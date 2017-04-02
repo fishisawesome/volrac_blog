@@ -12,7 +12,7 @@
         {% else %}
         <textarea placeholder="Message" name="message" class="form-control" rows="5" disabled></textarea>
         <br />
-        <a href="/accounts/login/?next={{request.path}}" class="btn btn-primary">Log in to Comment</a>
+        <a href="{% url 'account_login' %}?next={{request.path}}" class="btn btn-primary">Log in to Comment</a>
         {% endif %}
     </div>
 </div>

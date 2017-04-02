@@ -13,15 +13,21 @@ def index(request):
     return render(request, 'posts/index.html', context)
 
 def new(request):
-    args = {}
-    args['user'] = User.objects.get(pk=request.POST['user_id'])
-    args['title'] = request.POST['title']
-    args['content'] = request.POST['content']
-    args['pub_date'] = timezone.now()
-    post = Post(**args)
-    post.save()
+    if request.method == 'POST':
+        args = {}
+        args['user'] = User.objects.get(pk=request.POST['user_id'])
+        args['title'] = request.POST['title']
+        args['content'] = request.POST['content']
+        args['pub_date'] = timezone.now()
+        post = Post(**args)
+        post.save()
 
-    return HttpResponseRedirect(reverse('posts:index'))
+        return HttpResponseRedirect(reverse('posts:index'))
+
+    context = {}
+    context['base'] = 'layout.html'
+    return render(request, 'posts/new.html', context)
+
 
 def detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
