@@ -20,45 +20,7 @@ Volrac's latest posts.
             </p>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-10 col-sm-offset-1">
-            {% if post.comment_set.all|length > 0 %}
-            <h3 id="comments">Comments</h3>
-            {% for comment in post.comment_set.all %}
-                <div class="row">
-                    <div class="col-xs-1">
-                        <img src="http://www.gravatar.com/avatar/?d=mm&s=200" class="img-responsive img-circle" />
-                    </div>
-                    <div class="col-xs-11">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <strong>{{ comment.user.username }}</strong> <span class="text-muted">commented {{ comment.pub_date | timesince }} ago</span>
-                            </div>
-                            <div class="panel-body">
-                            {{ comment.message|safe|escape }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-            {% endif %}
-            {% if user.is_authenticated %}
-            <div class="row">
-                <div class="col-sm-12">
-                    <h4>New Comment</h4>
-                    <form method="POST" action="{% url 'comments:add' post.id %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="user_id" value="{{ user.id }}" />
-                        <textarea placeholder="Message" name="message" class="form-control" rows="5"></textarea>
-                        <br />
-                        <button class="btn btn-primary">Add Comment</button>
-                    </form>
-                </div>
-            </div>
-            {% else %}
-            <a href="/accounts/login/?next={{request.path}}">You must log in to comment</a>
-            {% endif %}
-        </div>
-    </div>
+    {% include 'comments/list.html' with post=post %}
+    {% include 'comments/new.html' with post=post %}
 </div>
 {% endblock %}

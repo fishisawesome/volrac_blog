@@ -23,3 +23,7 @@
     border-right-color:#ddd;
     border-width:8px;
 }
+
+.comment-avatar {
+    max-width: 200px;
+}
