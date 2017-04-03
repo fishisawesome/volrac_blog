@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from .models import Post
 
 def index(request):
-    latest_posts = Post.objects.order_by('-pub_date')[:5]
+    latest_posts = Post.objects.order_by('-pub_date')
     context = {}
     context['latest_posts'] = latest_posts
     return render(request, 'posts/index.html', context)

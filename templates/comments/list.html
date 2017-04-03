@@ -1,40 +1,34 @@
 {% load blog_extras %}
-<div class="row">
-    <div class="col-sm-10 col-sm-offset-1">
-        {% if post.comment_set.all|length > 0 %}
-        <h3 id="comments">Comments</h3>
-        {% for comment in post.comment_set.all %}
-            <div class="row">
-                <div class="col-xs-1">
-                    {% if comment.user.socialaccount_set.first.get_avatar_url %}
-                        <img src="{{ comment.user.socialaccount_set.first.get_avatar_url }}" class="img-responsive img-circle comment-avatar" />
-                    {% else %}
-                    <img src="http://www.gravatar.com/avatar/?d=mm&s=200" class="img-responsive img-circle comment-avatar" />
-                    {% endif %}
-                </div>
-                <div class="col-xs-11">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <strong>
-                            {% if comment.user.socialaccount_set.first.get_profile_url %}
-                                <a href="{{ comment.user.socialaccount_set.first.get_profile_url }}">
-                                {{ comment.user.first_name }} {{ comment.user.last_name }}
-                                </a>
-                            {% else %}
-                               
-                               {{ comment.user|full_or_username }}
 
-                            {% endif %}
-                            </strong>
-                            <span class="text-muted">commented {{ comment.pub_date | timesince }} ago</span>
-                        </div>
-                        <div class="panel-body">
-                        {{ comment.message|safe|escape }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+<div class="ui comments">
+    {% if post.comment_set.all|length > 0 %}
+    <h3 class="ui dividing header">Comments</h3>
+    {% for comment in post.comment_set.all %}
+      <div class="comment">
+        <a class="avatar">
+            {% if comment.user.socialaccount_set.first.get_avatar_url %}
+                <img src="{{ comment.user.socialaccount_set.first.get_avatar_url }}" class="img-responsive img-circle comment-avatar" />
+            {% else %}
+                <img src="http://www.gravatar.com/avatar/?d=mm&s=200" class="img-responsive img-circle comment-avatar" />
+            {% endif %}
+        </a>
+        <div class="content">
+        <a class="author"
+        {% if comment.user.socialaccount_set.first.get_profile_url %}
+        href="{{ comment.user.socialaccount_set.first.get_profile_url }}"
         {% endif %}
-    </div>
+        >
+        {{ comment.user|full_or_username }}
+        </a>
+          <div class="metadata">
+            <div class="date">{{ comment.pub_date | timesince }} ago</div>
+          </div>
+          <div class="text">
+            {{ comment.message|safe|escape }}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+    {% endif %}
 </div>

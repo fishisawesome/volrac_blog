@@ -1,18 +1,25 @@
-<div class="row">
-    <div class="col-sm-10 col-sm-offset-1">
-        <h4>New Comment</h4>
-        {% if user.is_authenticated %}
-        <form method="POST" action="{% url 'comments:add' post.id %}">
-            {% csrf_token %}
-            <input type="hidden" name="user_id" value="{{ user.id }}" />
-            <textarea placeholder="Message" name="message" class="form-control" rows="5" required></textarea>
-            <br />
-            <button class="btn btn-primary">Add Comment</button>
-        </form>
-        {% else %}
-        <textarea placeholder="Message" name="message" class="form-control" rows="5" disabled></textarea>
-        <br />
-        <a href="{% url 'account_login' %}?next={{request.path}}" class="btn btn-primary">Log in to Comment</a>
-        {% endif %}
+<div class="ui comments">
+<br />
+<h3 class="ui dividing header">New Comment</h3>
+    {% if user.is_authenticated %}
+    <form class="ui reply form" method="POST" action="{% url 'comments:add' post.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ user.id }}" />
+        <div class="field">
+          <textarea name="message" placeholder="Message"></textarea>
+        </div>
+        <button class="ui primary submit labeled icon button">
+          <i class="icon edit"></i> Add Comment
+        </button>
+    </form>
+    {% else %}
+    <form class="ui reply form"
+    <div class="field">
+      <textarea name="message" placeholder="Message" disabled></textarea>
     </div>
+    <a href="{% url 'account_login' %}?next={{request.path}}" class="ui primary submit labeled icon button">
+      <i class="icon edit"></i> Sign-in to Comment
+    </a>
+    </form>
+    {% endif %}
 </div>
