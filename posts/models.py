@@ -6,11 +6,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
+from autoslug import AutoSlugField
 
 @python_2_unicode_compatible
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
+    slug = AutoSlugField(null=True, default=None, unique=True,populate_from='title')
     content = models.TextField()
     pub_date = models.DateTimeField('date published')
 

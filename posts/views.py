@@ -29,8 +29,8 @@ def new(request):
     return render(request, 'posts/new.html', context)
 
 
-def detail(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+def detail(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     context = {}
     context['post'] = post
 

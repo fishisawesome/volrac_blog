@@ -11,11 +11,11 @@ Volrac's latest posts.
     <h2 class="ui header"><i class="newspaper icon"></i> Latest Posts</h2>
     <div class="ui three stackable cards">
             {% for post in latest_posts %}
-                <a href="{% url 'posts:detail' post.id %}" class="ui raised centered card">
+                <div class="ui raised centered card">
                     <div class="content">
-                        <div class="header">
+                        <a href="{% url 'posts:detail' post.slug %}" class="header">
                         {{ post.title }}
-                        </div>
+                        </a>
 
                         <div class="meta">
                           <span class="category">
@@ -28,6 +28,11 @@ Volrac's latest posts.
                         </div>
                     </div>
                     <div class="extra content">
+                        <div class="left floated">
+                            <a href="{% url 'posts:detail' post.slug %}" class="ui button teal">
+                            Read Entry
+                            </a>
+                        </div>
                         <div class="right floated author">
                            {% if post.user.socialaccount_set.first.get_avatar_url %}
                                 <img src="{{ post.user.socialaccount_set.first.get_avatar_url }}" class="ui avatar image" />
@@ -37,7 +42,7 @@ Volrac's latest posts.
                             {{ post.user|full_or_username }}
                         </div>
                     </div>
-                </a>                
+                </div>                
 
             {% endfor %}
 
