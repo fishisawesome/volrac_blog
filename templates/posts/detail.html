@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load static %}
+{% load blog_extras %}
 
 {% block custom_css %}
 <link href="{% static 'css/comments.css' %}" rel="stylesheet">
@@ -14,7 +15,7 @@ Volrac's latest posts.
 <div class="ui container">
     <div class="ui piled segment">
       <h1 class="ui header">{{ post.title|escape|safe }}</h1>
-      <div class="sub header">Written by <a href="#">John Smith</a> on February 12, 2014.</div>
+      <div class="sub header">Posted by <strong>{{ post.user|full_or_username }}</strong> on {{ post.pub_date|date:"M d, Y h:i a" }}</div>
       <hr>
       {{ post.content|escape|safe }}
     </div>
