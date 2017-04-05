@@ -6,7 +6,14 @@
         {% csrf_token %}
         <input type="hidden" name="user_id" value="{{ user.id }}" />
         <div class="field">
-          <textarea name="message" placeholder="Message"></textarea>
+          <textarea
+                id="comment-message"
+                data-type="ckeditortype"
+                data-processed="0"
+                data-config='{"filebrowserWindowWidth": 940, "toolbar_Basic": [["Source", "-", "Bold", "Italic"]], "language": "en-us", "toolbar_Full": [["Styles", "Format", "Bold", "Italic", "Underline", "Strike", "SpellChecker", "Undo", "Redo"], ["Link", "Unlink", "Anchor"], ["Image", "Flash", "Table", "HorizontalRule"], ["TextColor", "BGColor"], ["Smiley", "SpecialChar"], ["Source"]], "height": 150, "width": "100%", "skin": "moono-lisa", "filebrowserWindowHeight": 725, "toolbar": "Full"}'
+                name="message"
+                placeholder="Message"
+                required></textarea>
         </div>
         <button class="ui primary submit labeled icon button">
           <i class="icon edit"></i> Add Comment

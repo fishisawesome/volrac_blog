@@ -19,4 +19,4 @@ def add(request, post_id):
         c = Comment(**d)
         c.save()
 
-    return HttpResponseRedirect(reverse('posts:detail', args=(post.id,)))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
