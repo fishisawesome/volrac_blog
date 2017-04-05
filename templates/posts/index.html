@@ -12,6 +12,11 @@ Volrac's latest posts.
     <div class="ui three stackable cards">
             {% for post in latest_posts %}
                 <div class="ui raised centered card">
+                    {% if post.image %}
+                    <a class="image" href="{% url 'posts:detail' post.slug %}">
+                        <img src="{{ post.image.url }}">
+                    </a>
+                    {% endif %}
                     <div class="content">
                         <a href="{% url 'posts:detail' post.slug %}" class="header">
                         {{ post.title }}

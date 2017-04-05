@@ -14,7 +14,16 @@ Volrac's latest posts.
 
 <div class="ui container">
     <div class="ui piled segment">
-      <h1 class="ui header">{{ post.title|escape|safe }}</h1>
+      <h1 class="ui header">
+      {% if post.image %}
+        <div class="ui middle aligned image">
+            <a href="{{ post.image.url }}" target="_blank">
+                <img src="{{ post.image.url }}">
+            </a>
+        </div>
+        {% endif %}
+      {{ post.title|escape|safe }}
+      </h1>
       <div class="sub header">Posted by <strong>{{ post.user|full_or_username }}</strong> on {{ post.pub_date|date:"M d, Y h:i a" }}</div>
       <hr>
       {{ post.content|escape|safe }}
