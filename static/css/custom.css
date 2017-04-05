@@ -2,3 +2,11 @@ footer {
     padding-top: 50px;
     padding-bottom: 50px;
 }
+
+.google-icon-signin {
+    background-color: #dd4b39 !important;
+    color: #FFF !important;
+}
+.socialaccount_provider {
+    display: inline-block;
+}

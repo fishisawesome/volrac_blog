@@ -23,11 +23,6 @@
         <div class="ui teal inverted stackable menu sticky">
             <div class="ui center aligned container">
                 
-                    <div class="item">
-                    <a href="{% url 'posts:index' %}">
-                        <i class="vine icon"></i>
-                    </a>
-                    </div>
                     <a class="item" href="{% url 'posts:index' %}"><i class="home icon"></i> Home</a>
                     {% if user.is_authenticated and user|has_group:"publisher" %} 
                     <a class="item new-post" href="javascript:;"><i class="pencil icon"></i> New Post</a>
@@ -79,6 +74,10 @@
               .sticky({
                 context: '#context'
               });
+
+            $('.ui.checkbox')
+              .checkbox()
+            ;
 
         $(document).ready(function(){
             $('.new-post').click(function(){
