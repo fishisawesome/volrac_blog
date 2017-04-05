@@ -68,6 +68,9 @@
 
         <script src="https://code.jquery.com/jquery.js"></script>
 
+        <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+        <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+
         <script src="{% static 'semantic/semantic.min.js' %}"></script>
         {% block custom_js %}
         <script>
@@ -82,7 +85,19 @@
 
                 $('.ui.modal')
                   .modal('setting', 'transition', 'horizontal flip')
-                  .modal('show')
+                  .modal('show', function(){
+
+                        var ckform = $('#content_textarea');
+                        
+                        if(ckform.data('processed') == "0" && ckform.attr('id').indexOf('__prefix__') == -1){
+                          ckform.data('processed',"1");
+                          $(ckform.data('external-plugin-resources')).each(function(){
+                              CKEDITOR.plugins.addExternal(this[0], this[1], this[2]);
+                          });
+                          CKEDITOR.replace(ckform.attr('id'), ckform.data('config'));
+                        }
+                    
+                  })
                 ;
             });
         });

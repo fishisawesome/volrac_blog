@@ -1,8 +1,20 @@
-{% extends base|default:'blank.html' %}
 {% load blog_extras %}
 {% block content %}
 {% if user.is_authenticated and user|has_group:"publisher" %} 
-
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
 <div class="ui standard modal">
 
     <i class="close icon"></i>
@@ -12,14 +24,25 @@
     
     <div class="content">
         <div class="description">
-            <form method="POST" action="{% url 'posts:new' %}" class="ui form" id="new_comment">
+            <form method="POST" action="{% url 'posts:new' %}" class="ui form" id="new_comment" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="hidden" name="user_id" value="{{ user.id }}" />
             <div class="field">
                 <input type="text" name="title" placeholder="Title" required>
             </div>
             <div class="field">
-                <textarea name="content" class="form-control" placeholder="Content" rows="5" required></textarea>
+                <textarea
+                    data-processed="0"
+                    data-config='{"filebrowserWindowWidth": 940, "toolbar_Basic": [["Source", "-", "Bold", "Italic"]], "language": "en-us", "toolbar_Full": [["Styles", "Format", "Bold", "Italic", "Underline", "Strike", "SpellChecker", "Undo", "Redo"], ["Link", "Unlink", "Anchor"], ["Image", "Flash", "Table", "HorizontalRule"], ["TextColor", "BGColor"], ["Smiley", "SpecialChar"], ["Source"]], "height": 291, "width": 835, "skin": "moono-lisa", "filebrowserWindowHeight": 725, "toolbar": "Full"}'
+                    id="content_textarea"
+                    name="content"
+                    class="form-control"
+                    placeholder="Content"
+                    rows="5"
+                    required></textarea>
+            </div>
+            <div class="field">
+                <input type="file" name="image" />
             </div>
             </form>
         </div>
@@ -29,14 +52,5 @@
     </div>
 
 </div>
-
-{% else %}
-    {% if base == 'layout.html' %}
-        <div class="container">
-            <div class="alert alert-danger">
-              <strong>Error!</strong> You are not allowed to create a new post.
-            </div>
-        </div>
-    {% endif %}
 {% endif %}
 {% endblock %}

@@ -24,4 +24,6 @@ urlpatterns = [
     url(r'^comments/', include('comments.urls')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^', include('posts.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
