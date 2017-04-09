@@ -10,3 +10,6 @@ footer {
 .socialaccount_provider {
     display: inline-block;
 }
+#logo-image {
+    margin-top: 10px;
+}
