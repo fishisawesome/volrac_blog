@@ -1,0 +1,47 @@
+{% if is_paginated %}
+{% load i18n %}
+
+
+  <div class="ui pagination menu">
+  {% if page_obj.has_previous %}
+    <a class="item" href="?page={{ page_obj.previous_page_number }}{{ getvars }}{{ hashtag }}">
+      <i class="chevron left icon"></i>
+    </a>
+  {% else %}
+    <div class="disabled item">
+      <i class="chevron left icon"></i>
+    </div>
+  {% endif %}
+
+
+  {% for page in pages %}
+    {% if page %}
+      {% ifequal page page_obj.number %}
+
+      <a href="#" class="active item" onclick="javascript: return false;">{{ page }}</a>
+
+      {% else %}
+
+        <a href="?page={{ page }}{{ getvars }}{{ hashtag }}" class="item">{{ page }}</a>
+      {% endifequal %}
+    
+    {% else %}
+    
+    <a href="#" class="disabled item" onclick="javascript: return false;">...</a>
+    
+    {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}{{ getvars }}{{ hashtag }}" class="item">
+      <i class="chevron right icon"></i>  
+    </a>
+  {% else %}
+    <a href="#" class="disabled item" onclick="javascript: return false;">
+      <i class="chevron right icon"></i>
+    </a>
+  {% endif %}
+
+
+  </div>
+{% endif %}

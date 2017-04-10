@@ -1,11 +1,15 @@
 {% extends 'layout.html' %}
 {% load blog_extras %}
+{% load pagination_tags %}
 
 {% block pagetitle %}
 Volrac's latest posts.
 {% endblock %}
 
 {% block content %}
+
+{% autopaginate latest_posts 6 %}
+
 <div class="ui container">
 
     <h2 class="ui header"><i class="newspaper icon"></i> Latest Posts</h2>
@@ -52,5 +56,13 @@ Volrac's latest posts.
             {% endfor %}
 
     </div>
+
+    
+    <div class="ui centered grid">
+        <div class="center aligned column">
+        {% paginate %}
+        </div>
+    </div>
+    
 </div>
 {% endblock %}
