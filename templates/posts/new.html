@@ -1,4 +1,6 @@
+{% load categories_tags %}
 {% load blog_extras %}
+
 {% block content %}
 {% if user.is_authenticated and user|has_group:"publisher" %} 
 {% if form.errors %}
@@ -29,6 +31,15 @@
             <input type="hidden" name="user_id" value="{{ user.id }}" />
             <div class="field">
                 <input type="text" name="title" placeholder="Title" required>
+            </div>
+            <div class="field">
+                {% get_categories as categories %}
+                <select class="ui fluid search dropdown" name="categories" multiple="">
+                    <option value="">Categories</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.title }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div class="field">
                 <textarea
