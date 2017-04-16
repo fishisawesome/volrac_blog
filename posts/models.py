@@ -10,6 +10,8 @@ from django.utils.encoding import python_2_unicode_compatible
 from autoslug import AutoSlugField
 from ckeditor.fields import RichTextField
 
+from categories.models import Category
+
 @python_2_unicode_compatible
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -18,6 +20,7 @@ class Post(models.Model):
     content = RichTextField()
     image = models.ImageField(upload_to = 'posts/%Y/%m/%d/', blank=True, null=True, default=None)
     pub_date = models.DateTimeField('date published', auto_now_add=True)
+    categories = models.ManyToManyField(Category)
 
     def published_recently(self):
         now = timezone.now()

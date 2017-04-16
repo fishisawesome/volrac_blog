@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from django.contrib.auth.models import User
 from .models import Post
+from categories.models import Category
 from .forms import PostForm
 
 def index(request):
@@ -18,20 +19,19 @@ def new(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
+            
             post.user = User.objects.get(pk=request.POST['user_id'])
             post.save()
+
+            categories = request.POST.getlist('categories')
+            for category_id in categories:
+                category = Category.objects.filter(pk=category_id).get()
+                post.categories.add(category)
+
+            post.save()
             return HttpResponseRedirect(reverse('posts:index'))
-        # args = {}
-        # args['user'] = User.objects.get(pk=request.POST['user_id'])
-        # args['title'] = request.POST['title']
-        # args['content'] = request.POST['content']
-        # args['pub_date'] = timezone.now()
-        # post = Post(**args)
-        # post.save()
-    else:
-        form = PostForm()
     
-    return render(request, 'posts/new.html', {'form': form})
+    return render(request, 'posts/new.html')
 
 
 def detail(request, slug):

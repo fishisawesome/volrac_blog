@@ -24,9 +24,25 @@ Volrac's latest posts.
         {% endif %}
       {{ post.title|escape|safe }}
       </h1>
-      <div class="sub header">Posted by <strong>{{ post.user|full_or_username }}</strong> on {{ post.pub_date|date:"M d, Y h:i a" }}</div>
+      <div class="sub header">
+      Posted by <strong>{{ post.user|full_or_username }}</strong> on {{ post.pub_date|date:"M d, Y h:i a" }}
+      </div>
+      <div class="sub header">
+        {% if post.categories.all|length > 0 %}
+        <i class="folder open outline icon"></i>
+        {% endif %}
+        {% for category in post.categories.all %}
+          <a href="{% url 'categories:detail' category.slug %}">{{ category.title }}</a>
+          {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </div>
       <hr>
       {{ post.content|escape|safe }}
+      <hr>
+      <div class="sub header">
+        <i class="tags icon"></i>
+        Linked, Hash, Tags, Here
+      </div>
     </div>
 
     {% include 'comments/list.html' with post=post %}
