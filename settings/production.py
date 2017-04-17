@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'categories.apps.CategoriesConfig',
     'comments.apps.CommentsConfig',
     'posts.apps.PostsConfig',
+
+    'flat_responsive',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
