@@ -29,6 +29,7 @@ def new(request):
                 post.categories.add(category)
 
             post.save()
+            form.save_m2m()
             return HttpResponseRedirect(reverse('posts:index'))
     
     return render(request, 'posts/new.html')
