@@ -50,5 +50,5 @@ def tag(request, tag):
     context['category'] = tag
     context['page_title'] = "Latest Posts for {}".format(tag)
     context['page_heading'] = context['page_title']
-    context['posts'] = Post.objects.filter(tags__name=tag).order_by('-pub_date').all()
+    context['posts'] = Post.objects.filter(tags__slug=tag).order_by('-pub_date').all()
     return render(request, 'posts/index.html', context)

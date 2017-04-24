@@ -24,7 +24,7 @@
             {% if post.tags.all|length > 0 %}
                 <i class="ui tags icon"></i>
                 {% for tag in post.tags.all %}
-                <a href="{% url 'posts:tag' tag %}">
+                <a href="{% url 'posts:tag' tag.slug %}">
                 {{ tag }}
                 </a>
                 {% if not forloop.last %}, {% endif %}
