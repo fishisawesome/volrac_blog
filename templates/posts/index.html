@@ -3,61 +3,24 @@
 {% load pagination_tags %}
 
 {% block pagetitle %}
-Volrac's latest posts.
+{{ page_title|default:"Volrac's latest posts." }}
 {% endblock %}
 
 {% block content %}
 
-{% autopaginate latest_posts 6 %}
+{% autopaginate posts 6 %}
 
 <div class="ui container">
 
-    <h2 class="ui header"><i class="newspaper icon"></i> Latest Posts</h2>
+    <h2 class="ui header">
+        <i class="newspaper icon"></i> {{ page_heading|default:"Latest Posts" }}
+    </h2>
     <div class="ui three stackable cards">
-            {% for post in latest_posts %}
-                <div class="ui raised centered card">
-                    {% if post.image %}
-                    <a class="image" href="{% url 'posts:detail' post.slug %}">
-                        <img src="{{ post.image.url }}">
-                    </a>
-                    {% endif %}
-                    <div class="content">
-                        <a href="{% url 'posts:detail' post.slug %}" class="header">
-                        {{ post.title }}
-                        </a>
-
-                        <div class="meta">
-                          <span class="category">
-                                <i class="calendar icon"></i> {{ post.pub_date | timesince }} ago /
-                                <i class="comments icon"></i>  {{ post.comment_set.all|length }} comments
-                          </span>
-                        </div>
-                        <div class="description">
-                            {{ post.content | safe|escape|truncatechars_html:350 }}
-                        </div>
-                    </div>
-                    <div class="extra content">
-                        <div class="left floated">
-                            <a href="{% url 'posts:detail' post.slug %}" class="ui button teal">
-                            Read Entry
-                            </a>
-                        </div>
-                        <div class="right floated author">
-                           {% if post.user.socialaccount_set.first.get_avatar_url %}
-                                <img src="{{ post.user.socialaccount_set.first.get_avatar_url }}" class="ui avatar image" />
-                            {% else %}
-                            <img src="http://www.gravatar.com/avatar/?d=mm&s=200" class="ui avatar image" />
-                            {% endif %}
-                            {{ post.user|full_or_username }}
-                        </div>
-                    </div>
-                </div>                
-
-            {% endfor %}
-
+        {% for post in posts %}
+            {% include 'posts/card.html' with post=post %}
+        {% endfor %}
     </div>
 
-    
     <div class="ui centered grid">
         <div class="center aligned column">
         {% paginate %}

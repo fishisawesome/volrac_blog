@@ -12,6 +12,8 @@ from ckeditor.fields import RichTextField
 
 from categories.models import Category
 
+from taggit.managers import TaggableManager
+
 @python_2_unicode_compatible
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -21,6 +23,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to = 'posts/%Y/%m/%d/', blank=True, null=True, default=None)
     pub_date = models.DateTimeField('date published', auto_now_add=True)
     categories = models.ManyToManyField(Category)
+    tags = TaggableManager()
 
     def published_recently(self):
         now = timezone.now()

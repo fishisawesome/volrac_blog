@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 
     'ckeditor',
     'pagination_bootstrap',
+    'taggit',
 ]
 
 MIDDLEWARE = [

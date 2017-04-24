@@ -11,7 +11,7 @@ from .forms import PostForm
 def index(request):
     latest_posts = Post.objects.order_by('-pub_date')
     context = {}
-    context['latest_posts'] = latest_posts
+    context['posts'] = latest_posts
     return render(request, 'posts/index.html', context)
 
 def new(request):
@@ -43,3 +43,11 @@ def detail(request, slug):
         context['user'] = request.user
 
     return render(request, 'posts/detail.html', context)
+
+def tag(request, tag):
+    context = {}
+    context['category'] = tag
+    context['page_title'] = "Latest Posts for {}".format(tag)
+    context['page_heading'] = context['page_title']
+    context['posts'] = Post.objects.filter(tags__name=tag).order_by('-pub_date').all()
+    return render(request, 'posts/index.html', context)

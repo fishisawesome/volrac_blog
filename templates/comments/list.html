@@ -1,6 +1,6 @@
 {% load blog_extras %}
 
-<div class="ui comments">
+<div class="ui comments" id="comments">
     {% if post.comment_set.all|length > 0 %}
     <h3 class="ui dividing header">Comments</h3>
     {% for comment in post.comment_set.all %}
