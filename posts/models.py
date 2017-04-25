@@ -7,12 +7,12 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 
-from autoslug import AutoSlugField
-from ckeditor.fields import RichTextField
-
 from categories.models import Category
 
+from autoslug import AutoSlugField
+from ckeditor.fields import RichTextField
 from taggit.managers import TaggableManager
+from PIL import Image
 
 @python_2_unicode_compatible
 class Post(models.Model):
@@ -24,6 +24,18 @@ class Post(models.Model):
     pub_date = models.DateTimeField('date published', auto_now_add=True)
     categories = models.ManyToManyField(Category)
     tags = TaggableManager()
+
+    def save(self):
+        super(Post, self).save()
+
+        if not self.id and not self.image:
+            return
+
+        img = Image.open(self.image)
+
+        maxsize = (600, 600)
+        img.thumbnail(maxsize, Image.ANTIALIAS)
+        img.save(self.image.path)
 
     def published_recently(self):
         now = timezone.now()
