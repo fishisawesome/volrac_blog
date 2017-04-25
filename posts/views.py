@@ -3,6 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
 from django.urls import reverse
 
+from django.contrib import messages
+
 from django.contrib.auth.models import User
 from .models import Post
 from categories.models import Category
@@ -32,9 +34,11 @@ def new(request):
 
             post.save()
             form.save_m2m()
-            return HttpResponseRedirect(reverse('posts:index'))
+            messages.success(request, 'New post successfully added!')
+        else:
+            messages.error(request, 'There was an error processing your blog post.')
     
-    return render(request, 'posts/new.html')
+    return HttpResponseRedirect(reverse('posts:index'))
 
 
 def detail(request, slug):
