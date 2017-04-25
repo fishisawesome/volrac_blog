@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from .models import Post
 from categories.models import Category
+from taggit.models import Tag
+
 from .forms import PostForm
 
 def index(request):
@@ -47,8 +49,8 @@ def detail(request, slug):
 
 def tag(request, tag):
     context = {}
-    context['category'] = tag
-    context['page_title'] = "Latest Posts for {}".format(tag)
+    tag_obj = Tag.objects.filter(slug=tag).first()
+    context['page_title'] = "Latest Posts for {}".format(tag_obj.name)
     context['page_heading'] = context['page_title']
     context['posts'] = Post.objects.filter(tags__slug=tag).order_by('-pub_date').all()
     return render(request, 'posts/index.html', context)
