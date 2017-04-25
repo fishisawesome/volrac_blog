@@ -28,14 +28,12 @@ class Post(models.Model):
     def save(self):
         super(Post, self).save()
 
-        if not self.id and not self.image:
-            return
+        if self.image:
+            img = Image.open(self.image)
 
-        img = Image.open(self.image)
-
-        maxsize = (600, 600)
-        img.thumbnail(maxsize, Image.ANTIALIAS)
-        img.save(self.image.path)
+            maxsize = (600, 600)
+            img.thumbnail(maxsize, Image.ANTIALIAS)
+            img.save(self.image.path)
 
     def published_recently(self):
         now = timezone.now()
