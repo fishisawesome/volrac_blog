@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'pagination_bootstrap',
     'taggit',
+    'analytical',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -203,3 +205,6 @@ LOGGING = {
         }
     }
 }
+
+# Analytical Variables
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-52788612-5'
